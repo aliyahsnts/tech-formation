@@ -39,15 +39,15 @@
         <li><a href="#section1">Home</a></li>
         <li class="has-submenu"><a href="#section2">Content</a>
           <ul class="sub-menu">
-            <li><a href="#section2">Language</a></li>
-            <li><a href="#section3">Mathematics</a></li>
-            <li><a href="#section3">History</a></li>
-            <li><a href="#section4" rel="sponsored" class="external">Ethics</a></li>
+            <li><a href="#section3">Language</a></li>
+            <li><a href="#section4">Mathematics</a></li>
+            <li><a href="#section5">History</a></li>
+            <li><a href="#section6" rel="sponsored" class="external">Ethics</a></li>
           </ul>
         </li>
-        <li><a href="#section4">Authors</a></li>
+        <li><a href="#section7">Authors</a></li>
         <!-- <li><a href="#section5">Video</a></li> -->
-        <li class="has-submenu"><a href="#section6">Others</a>
+        <li class="has-submenu"><a href="#section8">Others</a>
          <ul class="sub-menu">
             <li><a href="#references">References</a></li>
             <li>
@@ -62,7 +62,7 @@
   </header>
 
   <!-- ***** Main Banner Area Start ***** -->
-  <section class="section main-banner" id="top" data-section="section1">
+  <section class="section main-banner" id="section1" data-section="section1">
       <video autoplay muted loop id="bg-video">
           <source src="assets/images/course-video.mp4" type="video/mp4" />
       </video>
@@ -82,7 +82,7 @@
 
        
   <!--WHAT IS INFORMATION SOCIETY-->
-   <section class="section video" data-section="section5"> <!--INFOSOC-->
+   <section class="section video" data-section="section5" id="section2"> <!--INFOSOC-->
     <div class="container">
       <div class="row">
         <div class="col-md-6 align-self-center">
@@ -106,7 +106,7 @@
   </section>
 
   <!--SUPPOSED ROLE OF LANG-->
-  <section class="section why-us" data-section="section2">  <!--ROLE-OFLANG-->
+  <section class="section why-us" data-section="section2" id="section3">  <!--ROLE-OFLANG-->
     <div class="container">
       <div class="row">
         <div class="col-md-12">
@@ -165,7 +165,7 @@
 
 
   <!--math in shaping knowledge systems-->
- <section class="section video" data-section="section5"> <!--math-knowledge-sys-->
+ <section class="section video" data-section="section5" id="section4"> <!--math-knowledge-sys-->
     <div class="container">
       <div class="row">
         <div class="col-md-6 align-self-center">
@@ -192,7 +192,7 @@
 
 
 <!--HISTORICAL MILESTONE-->
-  <section class="section why-us" data-section="section2"> <!--historic-milestones-->
+  <section class="section why-us" data-section="section2" id="section5"> <!--historic-milestones-->
     <div class="container">
       <div class="row">
         <div class="col-md-12">
@@ -244,7 +244,7 @@
   </section>
 
 <!--Ethical and Technical challenges-->
-  <section class="section video" data-section="section5"> <!-- ethical-challenge-->
+  <section class="section video" data-section="section5" id="section6"> <!-- ethical-challenge-->
     <div class="container">
       <div class="row">
         <div class="col-md-6 align-self-center">
@@ -271,7 +271,7 @@
 
 
 <!--CONTACT-->
-  <section class="section courses" data-section="section4">
+  <section class="section courses" data-section="section4" id="section7">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
@@ -442,5 +442,46 @@
           checkSection();
         });
     </script> -->
+    <script>
+      $('.nav li:first').addClass('active');
+      var showSection = function showSection(section, isAnimate) {
+      var direction = section.replace(/#/, '');
+      var reqSection = $('[data-section="' + direction + '"]');
+
+      // Fallback to any ID if no data-section found
+      if (!reqSection.length) {
+        reqSection = $('#' + direction);
+      }
+
+      if (!reqSection.length) {
+        console.warn("No matching section for:", section);
+        return;
+      }
+
+      var reqSectionPos = reqSection.offset().top;
+
+      if (isAnimate) {
+        $('body, html').animate({
+          scrollTop: reqSectionPos
+        }, 800);
+      } else {
+        $('body, html').scrollTop(reqSectionPos);
+      }
+    };
+    var checkSection = function checkSection() {
+  $('[data-section], [id]').each(function () {
+    var $this = $(this),
+      topEdge = $this.offset().top - 80,
+      bottomEdge = topEdge + $this.height(),
+      wScroll = $(window).scrollTop();
+
+    if (topEdge < wScroll && bottomEdge > wScroll) {
+      var currentId = $this.attr('data-section') || $this.attr('id');
+      var reqLink = $('a[href="#' + currentId + '"]');
+      reqLink.closest('li').addClass('active').siblings().removeClass('active');
+    }
+  });
+};
+    </script>
 </body>
 </html>
